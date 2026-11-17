@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/test_area_builder.gd" id="1_builder"]
+
+[sub_resource type="ProceduralSkyMaterial" id="SkyMaterial_test_area"]
+sky_top_color = Color(0.19, 0.39, 0.62, 1)
+sky_horizon_color = Color(0.72, 0.79, 0.83, 1)
+ground_bottom_color = Color(0.16, 0.18, 0.16, 1)
+ground_horizon_color = Color(0.62, 0.66, 0.63, 1)
+sun_angle_max = 18.0
+sun_curve = 0.12
+
+[sub_resource type="Sky" id="Sky_test_area"]
+sky_material = SubResource("SkyMaterial_test_area")
+
+[sub_resource type="Environment" id="Environment_test_area"]
+background_mode = 2
+sky = SubResource("Sky_test_area")
+ambient_light_source = 3
+ambient_light_color = Color(0.72, 0.78, 0.85, 1)
+ambient_light_energy = 0.65
+
+[node name="TestArea" type="Node3D"]
+script = ExtResource("1_builder")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_test_area")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+rotation = Vector3(-0.72, -0.52, 0)
+light_color = Color(1, 0.92, 0.78, 1)
+light_energy = 1.15
+shadow_enabled = true

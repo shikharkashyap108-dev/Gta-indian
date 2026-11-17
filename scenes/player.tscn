@@ -1,0 +1,226 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/player_controller.gd" id="1_controller"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_player"]
+radius = 0.35
+height = 1.8
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_joystick"]
+bg_color = Color(0.08, 0.12, 0.15, 0.6)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.8, 0.9, 1, 0.78)
+corner_radius_top_left = 48
+corner_radius_top_right = 48
+corner_radius_bottom_right = 48
+corner_radius_bottom_left = 48
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_action"]
+bg_color = Color(0.08, 0.12, 0.15, 0.68)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.85, 0.9, 1, 0.85)
+corner_radius_top_left = 28
+corner_radius_top_right = 28
+corner_radius_bottom_right = 28
+corner_radius_bottom_left = 28
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_settings"]
+bg_color = Color(0.08, 0.12, 0.15, 0.68)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.75, 0.84, 0.9, 0.7)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_controller")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+position = Vector3(0, 0.9, 0)
+shape = SubResource("CapsuleShape3D_player")
+
+[node name="CameraPivot" type="Node3D" parent="."]
+position = Vector3(0, 1.45, 0)
+
+[node name="SpringArm3D" type="SpringArm3D" parent="CameraPivot"]
+spring_length = 4.5
+margin = 0.2
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot/SpringArm3D"]
+current = true
+
+[node name="TouchControls" type="CanvasLayer" parent="."]
+layer = 1
+
+[node name="Overlay" type="Control" parent="TouchControls"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="MovePad" type="Panel" parent="TouchControls/Overlay"]
+anchor_left = 0.075
+anchor_top = 0.58
+anchor_right = 0.22
+anchor_bottom = 0.93
+theme_override_styles/panel = SubResource("StyleBox_joystick")
+mouse_filter = 2
+
+[node name="MoveLabel" type="Label" parent="TouchControls/Overlay"]
+anchor_left = 0.075
+anchor_top = 0.58
+anchor_right = 0.22
+anchor_bottom = 0.93
+theme_override_colors/font_color = Color(0.9, 0.95, 1, 0.95)
+theme_override_font_sizes/font_size = 22
+horizontal_alignment = 1
+vertical_alignment = 1
+text = "MOVE"
+mouse_filter = 2
+
+[node name="LookHint" type="Label" parent="TouchControls/Overlay"]
+anchor_left = 0.42
+anchor_top = 0.03
+anchor_right = 0.66
+anchor_bottom = 0.16
+theme_override_colors/font_color = Color(0.9, 0.95, 1, 0.85)
+theme_override_font_sizes/font_size = 20
+horizontal_alignment = 1
+vertical_alignment = 1
+text = "DRAG TO LOOK"
+mouse_filter = 2
+
+[node name="SettingsReadout" type="Label" parent="TouchControls/Overlay"]
+anchor_left = 0.70
+anchor_top = 0.0
+anchor_right = 0.99
+anchor_bottom = 0.055
+theme_override_colors/font_color = Color(0.9, 0.95, 1, 0.95)
+theme_override_font_sizes/font_size = 17
+horizontal_alignment = 1
+vertical_alignment = 1
+mouse_filter = 2
+
+[node name="SensitivityDownPanel" type="Panel" parent="TouchControls/Overlay"]
+anchor_left = 0.70
+anchor_top = 0.06
+anchor_right = 0.81
+anchor_bottom = 0.19
+theme_override_styles/panel = SubResource("StyleBox_settings")
+mouse_filter = 2
+
+[node name="SensitivityDownLabel" type="Label" parent="TouchControls/Overlay"]
+anchor_left = 0.70
+anchor_top = 0.06
+anchor_right = 0.81
+anchor_bottom = 0.19
+theme_override_colors/font_color = Color(0.9, 0.95, 1, 0.95)
+theme_override_font_sizes/font_size = 16
+horizontal_alignment = 1
+vertical_alignment = 1
+text = "LOOK -"
+mouse_filter = 2
+
+[node name="SensitivityUpPanel" type="Panel" parent="TouchControls/Overlay"]
+anchor_left = 0.82
+anchor_top = 0.06
+anchor_right = 0.91
+anchor_bottom = 0.19
+theme_override_styles/panel = SubResource("StyleBox_settings")
+mouse_filter = 2
+
+[node name="SensitivityUpLabel" type="Label" parent="TouchControls/Overlay"]
+anchor_left = 0.82
+anchor_top = 0.06
+anchor_right = 0.91
+anchor_bottom = 0.19
+theme_override_colors/font_color = Color(0.9, 0.95, 1, 0.95)
+theme_override_font_sizes/font_size = 16
+horizontal_alignment = 1
+vertical_alignment = 1
+text = "LOOK +"
+mouse_filter = 2
+
+[node name="InvertPanel" type="Panel" parent="TouchControls/Overlay"]
+anchor_left = 0.92
+anchor_top = 0.06
+anchor_right = 0.99
+anchor_bottom = 0.19
+theme_override_styles/panel = SubResource("StyleBox_settings")
+mouse_filter = 2
+
+[node name="InvertLabel" type="Label" parent="TouchControls/Overlay"]
+anchor_left = 0.92
+anchor_top = 0.06
+anchor_right = 0.99
+anchor_bottom = 0.19
+theme_override_colors/font_color = Color(0.9, 0.95, 1, 0.95)
+theme_override_font_sizes/font_size = 15
+horizontal_alignment = 1
+vertical_alignment = 1
+text = "INVERT Y"
+mouse_filter = 2
+
+[node name="SprintPanel" type="Panel" parent="TouchControls/Overlay"]
+anchor_left = 0.72
+anchor_top = 0.70
+anchor_right = 0.86
+anchor_bottom = 0.95
+theme_override_styles/panel = SubResource("StyleBox_action")
+mouse_filter = 2
+
+[node name="SprintLabel" type="Label" parent="TouchControls/Overlay"]
+anchor_left = 0.72
+anchor_top = 0.70
+anchor_right = 0.86
+anchor_bottom = 0.95
+theme_override_colors/font_color = Color(0.9, 0.95, 1, 0.95)
+theme_override_font_sizes/font_size = 20
+horizontal_alignment = 1
+vertical_alignment = 1
+text = "RUN"
+mouse_filter = 2
+
+[node name="JumpPanel" type="Panel" parent="TouchControls/Overlay"]
+anchor_left = 0.87
+anchor_top = 0.70
+anchor_right = 0.99
+anchor_bottom = 0.95
+theme_override_styles/panel = SubResource("StyleBox_action")
+mouse_filter = 2
+
+[node name="JumpLabel" type="Label" parent="TouchControls/Overlay"]
+anchor_left = 0.87
+anchor_top = 0.70
+anchor_right = 0.99
+anchor_bottom = 0.95
+theme_override_colors/font_color = Color(0.9, 0.95, 1, 0.95)
+theme_override_font_sizes/font_size = 20
+horizontal_alignment = 1
+vertical_alignment = 1
+text = "JUMP"
+mouse_filter = 2
+
+[node name="DesktopHints" type="CanvasLayer" parent="."]
+
+[node name="Instructions" type="Label" parent="DesktopHints"]
+offset_left = 24.0
+offset_top = 20.0
+offset_right = 850.0
+offset_bottom = 78.0
+theme_override_colors/font_color = Color(0.9, 0.95, 1, 0.9)
+theme_override_font_sizes/font_size = 18
+text = "WASD / arrows move  |  Mouse look  |  Shift run  |  Space jump\n[ / ] look sensitivity  |  I invert Y  |  Esc release mouse"
+mouse_filter = 2
